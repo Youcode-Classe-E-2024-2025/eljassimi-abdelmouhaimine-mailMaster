@@ -39,9 +39,11 @@ class MailingListController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $list = MailingList::findOrFail($id);
+        $list->update($request->all());
+        return $list;
     }
 
     /**

@@ -72,6 +72,7 @@ class AuthController extends Controller
             'token' => $token
         ], 201);
     }
+
     /**
      * @OA\Post(
      *     path="/api/login",
@@ -99,7 +100,6 @@ class AuthController extends Controller
      *     )
      * )
      */
-
     public function login(Request $request)
     {
         $request->validate([
@@ -123,6 +123,21 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     summary="Logout the authenticated user",
+     *     tags={"Authentication"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="User logged out successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Logged out")
+     *         )
+     *     )
+     * )
+     */
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();

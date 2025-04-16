@@ -36,7 +36,29 @@ class SubscriberController extends Controller
         return response()->json(Subscriber::all(), 200);
     }
 
-
+    /**
+     * @OA\Post(
+     *     path="/api/subscribers",
+     *     summary="Create a new subscriber",
+     *     tags={"Subscribers"},
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email"},
+     *             @OA\Property(property="email", type="string", format="email", example="john@example.com"),
+     *             @OA\Property(property="name", type="string", example="John Doe")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Subscriber created",
+     *         @OA\JsonContent(ref="#/components/schemas/Subscriber")
+     *     ),
+     *     @OA\Response(response=422, description="Validation Error"),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([

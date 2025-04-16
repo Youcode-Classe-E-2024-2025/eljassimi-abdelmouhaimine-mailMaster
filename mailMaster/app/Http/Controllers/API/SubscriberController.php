@@ -151,7 +151,24 @@ class SubscriberController extends Controller
         return response()->json($subscriber);
     }
 
-
+    /**
+     * @OA\Delete(
+     *     path="/api/subscribers/{id}",
+     *     summary="Delete a subscriber",
+     *     tags={"Subscribers"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Subscriber ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=204, description="Subscriber deleted"),
+     *     @OA\Response(response=404, description="Subscriber not found"),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
     public function destroy($id)
     {
         $subscriber = Subscriber::find($id);

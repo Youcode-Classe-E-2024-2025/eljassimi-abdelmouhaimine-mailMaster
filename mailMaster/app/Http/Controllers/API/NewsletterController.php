@@ -215,17 +215,25 @@ class NewsletterController extends Controller
      *     )
      * )
      */
-    public function sendNewsletter()
-    {
-        $subscribers = \App\Models\Subscriber::all();
 
-        foreach ($subscribers as $subscriber) {
-            Mail::raw('Salut ' . $subscriber->name . ', voici notre dernière newsletter !', function ($message) use ($subscriber) {
+    public function sendNewsletter(Request $request)
+    {
+        $request->validate([
+            'subject' => 'required|string',
+            'body' => 'required|string',
+        ]);
+
+        $subject = $request->subject;
+        $body = $request->body;
+
+        foreach (\App\Models\Subscriber::all() as $subscriber) {
+            Mail::raw($body, function ($message) use ($subscriber, $subject) {
                 $message->to($subscriber->email)
-                    ->subject('Notre dernière newsletter !');
+                    ->subject($subject);
             });
         }
 
-        return response()->json(['message' => 'Emails envoyés avec succès à tous les abonnés.']);
+        return response()->json(['message' => 'Newsletter sent successfully!']);
     }
+
 }

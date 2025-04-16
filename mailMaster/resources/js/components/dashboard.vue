@@ -40,7 +40,6 @@ const newsletter = ref({
 });
 const statusMessage = ref('');
 
-// Function to handle sending the newsletter
 const sendNewsletter = async () => {
     try {
         const token = localStorage.getItem('token');

@@ -60,7 +60,25 @@ class MailingListController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/mailing-lists/{id}",
+     *     tags={"Mailing Lists"},
+     *     summary="Get a specific mailing list by ID",
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="Mailing List ID",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mailing list details",
+     *         @OA\JsonContent(ref="#/components/schemas/MailingList")
+     *     ),
+     *     @OA\Response(response=404, description="Not Found")
+     * )
      */
     public function show($id)
     {

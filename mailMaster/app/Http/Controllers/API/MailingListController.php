@@ -5,11 +5,29 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\MailingList;
 use Illuminate\Http\Request;
-
+/**
+ * @OA\Tag(
+ *     name="Mailing Lists",
+ *     description="API Endpoints for Managing Mailing Lists"
+ * )
+ */
 class MailingListController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/mailing-lists",
+     *     tags={"Mailing Lists"},
+     *     summary="Get all mailing lists with subscribers",
+     *     security={{"sanctum": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of mailing lists",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/MailingList")
+     *         )
+     *     )
+     * )
      */
     public function index()
     {

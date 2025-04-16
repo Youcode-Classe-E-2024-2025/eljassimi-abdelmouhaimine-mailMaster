@@ -20,7 +20,16 @@ class NewsletterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'mailing_list_id' => 'required|exists:mailing_lists,id',
+            'subject' => 'required|string|max:255',
+            'content' => 'required|string',
+            'sent_at' => 'nullable|date',
+        ]);
+
+        $newsletter = Newsletter::create($request->all());
+
+        return response()->json($newsletter, 201);
     }
 
     /**

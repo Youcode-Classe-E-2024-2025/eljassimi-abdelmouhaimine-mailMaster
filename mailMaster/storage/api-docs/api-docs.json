@@ -194,15 +194,289 @@
                     }
                 ]
             }
+        },
+        "/api/newsletters": {
+            "get": {
+                "tags": [
+                    "Newsletter"
+                ],
+                "summary": "List all newsletters",
+                "operationId": "532f6b8db1c22bf2b74331c104e89bf1",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Newsletter"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Newsletter"
+                ],
+                "summary": "Create a new newsletter",
+                "operationId": "ed4e902512fcd0bb23df43361419e13f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "mailing_list_id",
+                                    "subject",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "mailing_list_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "example": "Exciting Updates!"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Here is the content of the newsletter."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Newsletter created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Newsletter"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/newsletters/{id}": {
+            "get": {
+                "tags": [
+                    "Newsletter"
+                ],
+                "summary": "Get a single newsletter",
+                "operationId": "2141137f64ad685c920be75310484660",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Newsletter ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Newsletter"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Newsletter not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Newsletter"
+                ],
+                "summary": "Update a newsletter",
+                "operationId": "f4ac014b3dadcafa39d6036cb5999931",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Newsletter ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "mailing_list_id",
+                                    "subject",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "mailing_list_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "example": "Updated Subject"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Updated newsletter content."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Newsletter updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Newsletter"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Newsletter not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Newsletter"
+                ],
+                "summary": "Delete a newsletter",
+                "operationId": "d4d9c1e4e0b406819c3cf69ca5642346",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Newsletter ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Newsletter deleted successfully"
+                    },
+                    "404": {
+                        "description": "Newsletter not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
-    "tags": [
-        {
-            "name": "Authentication",
-            "description": "Authentication"
-        }
-    ],
     "components": {
+        "schemas": {
+            "Newsletter": {
+                "title": "Newsletter",
+                "required": [
+                    "id",
+                    "mailing_list_id",
+                    "subject",
+                    "content"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "mailing_list_id": {
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "subject": {
+                        "type": "string",
+                        "example": "New Feature Launch"
+                    },
+                    "content": {
+                        "type": "string",
+                        "example": "We are excited to share our new feature..."
+                    },
+                    "sent_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-04-16T12:34:56Z"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-04-15T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-04-15T10:30:00Z"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "passport": {
                 "type": "oauth2",
@@ -225,5 +499,15 @@
                 "in": "header"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Newsletter",
+            "description": "Newsletter"
+        }
+    ]
 }

@@ -118,7 +118,21 @@ class MailingListController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/mailing-lists/{id}",
+     *     tags={"Mailing Lists"},
+     *     summary="Delete a mailing list",
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="Mailing List ID",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=204, description="Deleted successfully"),
+     *     @OA\Response(response=404, description="Not Found")
+     * )
      */
     public function destroy($id)
     {

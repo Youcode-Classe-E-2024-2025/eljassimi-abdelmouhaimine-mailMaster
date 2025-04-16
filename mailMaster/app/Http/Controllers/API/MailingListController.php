@@ -35,7 +35,20 @@ class MailingListController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Get(
+     *     path="/api/mailing-lists",
+     *     tags={"Mailing Lists"},
+     *     summary="Get all mailing lists with subscribers",
+     *     security={{"sanctum": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of mailing lists",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/MailingList")
+     *         )
+     *     )
+     * )
      */
     public function store(Request $request)
     {

@@ -35,18 +35,22 @@ class MailingListController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *     path="/api/mailing-lists",
      *     tags={"Mailing Lists"},
-     *     summary="Get all mailing lists with subscribers",
+     *     summary="Create a new mailing list",
      *     security={{"sanctum": {}}},
-     *     @OA\Response(
-     *         response=200,
-     *         description="List of mailing lists",
+     *     @OA\RequestBody(
+     *         required=true,
      *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/MailingList")
+     *             required={"name"},
+     *             @OA\Property(property="name", type="string", example="Weekly Newsletter")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Mailing list created",
+     *         @OA\JsonContent(ref="#/components/schemas/MailingList")
      *     )
      * )
      */

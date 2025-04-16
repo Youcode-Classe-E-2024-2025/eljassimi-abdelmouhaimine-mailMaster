@@ -195,6 +195,200 @@
                 ]
             }
         },
+        "/api/mailing-lists": {
+            "get": {
+                "tags": [
+                    "Mailing Lists"
+                ],
+                "summary": "Get all mailing lists with subscribers",
+                "operationId": "d383fd4d44ea0dc98df950608c697579",
+                "responses": {
+                    "200": {
+                        "description": "List of mailing lists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MailingList"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Mailing Lists"
+                ],
+                "summary": "Create a new mailing list",
+                "operationId": "aded3147c2ec9d995466445057256e1a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Weekly Newsletter"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mailing list created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailingList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/mailing-lists/{id}": {
+            "get": {
+                "tags": [
+                    "Mailing Lists"
+                ],
+                "summary": "Get a specific mailing list by ID",
+                "operationId": "700d4efdf99df00d37e1feec8d0e0a96",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Mailing List ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mailing list details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailingList"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Mailing Lists"
+                ],
+                "summary": "Update a mailing list",
+                "operationId": "d898b4ab429c262a2f2901aa307e3cd4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Mailing List ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Name"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated mailing list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailingList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Mailing Lists"
+                ],
+                "summary": "Delete a mailing list",
+                "operationId": "683c4aecc1250cc2e349b7ceeb24f941",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Mailing List ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/newsletters": {
             "get": {
                 "tags": [
@@ -701,6 +895,33 @@
                 },
                 "type": "object"
             },
+            "MailingList": {
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Promotions Subscribers"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-04-16T12:34:56Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-04-16T12:34:56Z"
+                    }
+                },
+                "type": "object"
+            },
             "Subscriber": {
                 "title": "Subscriber",
                 "required": [
@@ -758,6 +979,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Mailing Lists",
+            "description": "API Endpoints for Managing Mailing Lists"
+        },
         {
             "name": "Subscribers",
             "description": "API Endpoints for Managing Subscribers"

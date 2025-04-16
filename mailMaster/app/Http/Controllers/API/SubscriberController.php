@@ -48,9 +48,22 @@ class SubscriberController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $subscriber = Subscriber::find($id);
+
+        if (!$subscriber) {
+            return response()->json(['message' => 'Subscriber not found'], 404);
+        }
+
+        $validated = $request->validate([
+            'email' => 'sometimes|email|unique:subscribers,email,' . $subscriber->id,
+            'name' => 'nullable|string|max:255',
+        ]);
+
+        $subscriber->update($validated);
+
+        return response()->json($subscriber);
     }
 
     /**

@@ -69,8 +69,16 @@ class SubscriberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $subscriber = Subscriber::find($id);
+
+        if (!$subscriber) {
+            return response()->json(['message' => 'Subscriber not found'], 404);
+        }
+
+        $subscriber->delete();
+
+        return response()->json(null, 204);
     }
 }

@@ -71,6 +71,28 @@ class SubscriberController extends Controller
         return response()->json($subscriber, 201);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/subscribers/{id}",
+     *     summary="Get a single subscriber",
+     *     tags={"Subscribers"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Subscriber ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Subscriber details",
+     *         @OA\JsonContent(ref="#/components/schemas/Subscriber")
+     *     ),
+     *     @OA\Response(response=404, description="Subscriber not found"),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
     public function show($id)
     {
         $subscriber = Subscriber::find($id);

@@ -35,9 +35,9 @@ class NewsletterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Newsletter $newsletter)
     {
-        //
+        return response()->json($newsletter, 200);
     }
 
     /**

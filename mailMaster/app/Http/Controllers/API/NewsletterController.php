@@ -43,9 +43,18 @@ class NewsletterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Newsletter $newsletter)
     {
-        //
+        $request->validate([
+            'mailing_list_id' => 'sometimes|exists:mailing_lists,id',
+            'subject' => 'sometimes|string|max:255',
+            'content' => 'sometimes|string',
+            'sent_at' => 'nullable|date',
+        ]);
+
+        $newsletter->update($request->all());
+
+        return response()->json($newsletter, 200);
     }
 
     /**

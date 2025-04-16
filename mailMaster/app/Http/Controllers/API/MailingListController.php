@@ -84,9 +84,31 @@ class MailingListController extends Controller
     {
         return MailingList::with('subscribers')->findOrFail($id);
     }
-
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/mailing-lists/{id}",
+     *     tags={"Mailing Lists"},
+     *     summary="Update a mailing list",
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="Mailing List ID",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Updated Name")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Updated mailing list",
+     *         @OA\JsonContent(ref="#/components/schemas/MailingList")
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {

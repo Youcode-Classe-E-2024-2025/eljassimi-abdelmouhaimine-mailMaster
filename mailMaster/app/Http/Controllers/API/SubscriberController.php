@@ -104,6 +104,35 @@ class SubscriberController extends Controller
         return response()->json($subscriber);
     }
 
+    /**
+     * @OA\Put(
+     *     path="/api/subscribers/{id}",
+     *     summary="Update an existing subscriber",
+     *     tags={"Subscribers"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Subscriber ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="email", type="string", format="email", example="newmail@example.com"),
+     *             @OA\Property(property="name", type="string", example="Updated Name")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Subscriber updated",
+     *         @OA\JsonContent(ref="#/components/schemas/Subscriber")
+     *     ),
+     *     @OA\Response(response=404, description="Subscriber not found"),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
     public function update(Request $request, $id)
     {
         $subscriber = Subscriber::find($id);

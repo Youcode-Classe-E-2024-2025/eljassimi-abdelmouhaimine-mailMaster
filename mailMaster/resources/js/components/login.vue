@@ -9,6 +9,10 @@
                     Login
                 </button>
             </form>
+            <p class="text-center mt-4 text-gray-600">
+                Dont have an account?
+                <a href="/register" class="text-green-600 font-semibold hover:underline">Register here</a>
+            </p>
         </div>
     </div>
 </template>

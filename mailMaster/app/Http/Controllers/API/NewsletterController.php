@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Newsletter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * @OA\Schema(
@@ -196,5 +197,35 @@ class NewsletterController extends Controller
         $newsletter->delete();
 
         return response()->json(null, 204);
+    }
+    /**
+     * @OA\Post(
+     *     path="/api/newsletter/send",
+     *     summary="Envoyer une newsletter à tous les abonnés",
+     *     description="Envoie un email simple à chaque abonné inscrit.",
+     *     operationId="sendNewsletter",
+     *     tags={"Newsletter"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Newsletter envoyée avec succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Emails envoyés avec succès à tous les abonnés.")
+     *         )
+     *     )
+     * )
+     */
+    public function sendNewsletter()
+    {
+        $subscribers = \App\Models\Subscriber::all();
+
+        foreach ($subscribers as $subscriber) {
+            Mail::raw('Salut ' . $subscriber->name . ', voici notre dernière newsletter !', function ($message) use ($subscriber) {
+                $message->to($subscriber->email)
+                    ->subject('Notre dernière newsletter !');
+            });
+        }
+
+        return response()->json(['message' => 'Emails envoyés avec succès à tous les abonnés.']);
     }
 }

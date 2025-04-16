@@ -624,6 +624,39 @@
                 ]
             }
         },
+        "/api/newsletter/send": {
+            "post": {
+                "tags": [
+                    "Newsletter"
+                ],
+                "summary": "Envoyer une newsletter à tous les abonnés",
+                "description": "Envoie un email simple à chaque abonné inscrit.",
+                "operationId": "sendNewsletter",
+                "responses": {
+                    "200": {
+                        "description": "Newsletter envoyée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Emails envoyés avec succès à tous les abonnés."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/subscribers": {
             "get": {
                 "tags": [
